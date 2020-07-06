@@ -16,7 +16,6 @@ class Firebase {
     app.initializeApp(config);
 
     /* Helper */
-
     this.serverValue = app.database.ServerValue;
     this.emailAuthProvider = app.auth.EmailAuthProvider;
 
@@ -72,9 +71,9 @@ class Firebase {
             const dbUser = snapshot.val();
 
             // default empty roles
-            if (!dbUser.roles) {
-              dbUser.roles = {};
-            }
+            // if (!dbUser.roles) {
+            //   dbUser.roles = {};
+            // }
 
             // merge auth and db user
             authUser = {

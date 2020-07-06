@@ -7,15 +7,30 @@ import { PasswordForgetLink } from '../PasswordForget';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
+
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import EmailIcon from '@material-ui/icons/Email';
+import FacebookIcon from '@material-ui/icons/Facebook';
+
+import useStyles from './style';
+import '../styles/styles.css'
+
 const SignInPage = () => (
   <div>
-    <h1>SignIn</h1>
     <SignInForm />
     <SignInGoogle />
     <SignInFacebook />
-    <SignInTwitter />
-    <PasswordForgetLink />
-    <SignUpLink />
   </div>
 );
 
@@ -42,6 +57,20 @@ class SignInFormBase extends Component {
     this.state = { ...INITIAL_STATE };
   }
 
+
+  Copyright = () => {
+    return (
+      <Typography variant="body2" color="textSecondary" align="center">
+        {'Copyright © '}
+        <Link color="inherit" href="/">
+          My Website
+        </Link>{' '}
+        {new Date().getFullYear()}
+        {'.'}
+      </Typography>
+    );
+  }
+
   onSubmit = event => {
     const { email, password } = this.state;
 
@@ -64,31 +93,61 @@ class SignInFormBase extends Component {
 
   render() {
     const { email, password, error } = this.state;
-
+    const classes = useStyles;
     const isInvalid = password === '' || email === '';
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <input
-          name="email"
-          value={email}
-          onChange={this.onChange}
-          type="text"
-          placeholder="Email Address"
-        />
-        <input
-          name="password"
-          value={password}
-          onChange={this.onChange}
-          type="password"
-          placeholder="Password"
-        />
-        <button disabled={isInvalid} type="submit">
-          Sign In
-        </button>
-
-        {error && <p>{error.message}</p>}
-      </form>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar, "margin-wauto"}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography className={classes.title, "text-center"} component="h1" variant="h5">
+            Sign in
+        </Typography>
+          <form className={classes.form} noValidate onSubmit={this.onSubmit}>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              type="text"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              value={email}
+              onChange={this.onChange}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              value={password}
+              onChange={this.onChange}
+              autoComplete="current-password"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              disabled={isInvalid}
+              className={classes.submit}
+            >
+              Sign In
+          </Button>
+          {error && <p>{error.message}</p>}
+          <PasswordForgetLink />
+          <SignUpLink />
+          </form>
+        </div>
+      </Container>
     );
   }
 }
@@ -130,11 +189,22 @@ class SignInGoogleBase extends Component {
     const { error } = this.state;
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <button type="submit">Sign In with Google</button>
+      <Container component="main" maxWidth="xs">
+        <form onSubmit={this.onSubmit}>
+          <Button 
+            type="submit"
+            variant="outlined" 
+            color="primary"
+            fullWidth
+            className="btn-spacing"
+          >
+            <EmailIcon color="secondary"/>
+            &nbsp;Sign In with Google
+          </Button>
 
-        {error && <p>{error.message}</p>}
-      </form>
+          {error && <p>{error.message}</p>}
+        </form>
+      </Container>
     );
   }
 }
@@ -176,60 +246,26 @@ class SignInFacebookBase extends Component {
     const { error } = this.state;
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <button type="submit">Sign In with Facebook</button>
+      <Container component="main" maxWidth="xs">
+        <form onSubmit={this.onSubmit}>
+          <Button
+            type="submit"
+            variant="contained" 
+            color="primary"
+            fullWidth
+            className="btn-spacing"
+          >
+            <FacebookIcon/>
+            &nbsp;Sign In with Facebook
+          </Button>
 
-        {error && <p>{error.message}</p>}
-      </form>
+          {error && <p>{error.message}</p>}
+        </form>
+      </Container>
     );
   }
 }
 
-class SignInTwitterBase extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = { error: null };
-  }
-
-  onSubmit = event => {
-    this.props.firebase
-      .doSignInWithTwitter()
-      .then(socialAuthUser => {
-        // Create a user in your Firebase Realtime Database too
-        return this.props.firebase.user(socialAuthUser.user.uid).set({
-          username: socialAuthUser.additionalUserInfo.profile.name,
-          email: socialAuthUser.additionalUserInfo.profile.email,
-          roles: {},
-        });
-      })
-      .then(() => {
-        this.setState({ error: null });
-        this.props.history.push(ROUTES.HOME);
-      })
-      .catch(error => {
-        if (error.code === ERROR_CODE_ACCOUNT_EXISTS) {
-          error.message = ERROR_MSG_ACCOUNT_EXISTS;
-        }
-
-        this.setState({ error });
-      });
-
-    event.preventDefault();
-  };
-
-  render() {
-    const { error } = this.state;
-
-    return (
-      <form onSubmit={this.onSubmit}>
-        <button type="submit">Sign In with Twitter</button>
-
-        {error && <p>{error.message}</p>}
-      </form>
-    );
-  }
-}
 
 const SignInForm = compose(
   withRouter,
@@ -246,11 +282,6 @@ const SignInFacebook = compose(
   withFirebase,
 )(SignInFacebookBase);
 
-const SignInTwitter = compose(
-  withRouter,
-  withFirebase,
-)(SignInTwitterBase);
-
 export default SignInPage;
 
-export { SignInForm, SignInGoogle, SignInFacebook, SignInTwitter };
+export { SignInForm, SignInGoogle, SignInFacebook };
