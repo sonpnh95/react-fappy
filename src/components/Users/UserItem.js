@@ -2,6 +2,14 @@ import React, { Component } from 'react';
 
 import { withFirebase } from '../Firebase';
 
+import { 
+  Container, 
+  Card,
+  CardHeader,
+  CardContent,
+  Grid } 
+  from '@material-ui/core';
+
 class UserItem extends Component {
   constructor(props) {
     super(props);
@@ -43,31 +51,52 @@ class UserItem extends Component {
 
     return (
       <div>
-        <h2>User ({this.props.match.params.id})</h2>
-        {loading && <div>Loading ...</div>}
-
-        {user && (
-          <div>
-            <span>
-              <strong>ID:</strong> {user.uid}
-            </span>
-            <span>
-              <strong>E-Mail:</strong> {user.email}
-            </span>
-            <span>
-              <strong>Username:</strong> {user.username}
-            </span>
-            <span>
-              <button
-                type="button"
-                onClick={this.onSendPasswordResetEmail}
-              >
-                Send Password Reset
-              </button>
-            </span>
-          </div>
-        )}
+      {user && 
+        <Container fixed className="my-5">
+          <Card>
+          
+            <CardHeader 
+              title="asss"
+            >
+              
+            </CardHeader>
+            <CardContent>
+              <Grid item xs={12}>
+              Details User: {user && user.fullName}
+              </Grid>
+            </CardContent>
+           
+          </Card>
+        </Container>
+      }
       </div>
+
+      // <div>
+      //   <h2>User ({this.props.match.params.id})</h2>
+      //   {loading && <div>Loading ...</div>}
+
+      //   {user && (
+      //     <div>
+      //       <span>
+      //         <strong>ID:</strong> {user.uid}
+      //       </span>
+      //       <span>
+      //         <strong>E-Mail:</strong> {user.email}
+      //       </span>
+      //       <span>
+      //         <strong>Username:</strong> {user.username}
+      //       </span>
+      //       <span>
+      //         <button
+      //           type="button"
+      //           onClick={this.onSendPasswordResetEmail}
+      //         >
+      //           Send Password Reset
+      //         </button>
+      //       </span>
+      //     </div>
+      //   )}
+      // </div>
     );
   }
 }

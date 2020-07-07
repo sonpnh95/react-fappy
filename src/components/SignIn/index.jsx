@@ -23,11 +23,13 @@ import useStyles from './style';
 import '../styles/styles.css'
 
 const SignInPage = () => (
-  <div>
-    <SignInForm />
-    <SignInGoogle />
-    <SignInFacebook />
-  </div>
+  <section className="login-background">
+    <div className="login-banner">
+      <SignInForm />
+      <SignInGoogle />
+      <SignInFacebook />
+    </div>
+  </section>
 );
 
 const INITIAL_STATE = {
@@ -138,7 +140,7 @@ class SignInFormBase extends Component {
             >
               Sign In
           </Button>
-          {error && <p>{error.message}</p>}
+          {error && <p className="text-danger mt-3">{error.message}</p>}
           <PasswordForgetLink />
           <SignUpLink />
           </form>
@@ -198,7 +200,7 @@ class SignInGoogleBase extends Component {
             &nbsp;Sign In with Google
           </Button>
 
-          {error && <p>{error.message}</p>}
+          {error && <p className="text-danger mt-3">{error.message}</p>}
         </form>
       </Container>
     );
@@ -255,7 +257,7 @@ class SignInFacebookBase extends Component {
             &nbsp;Sign In with Facebook
           </Button>
 
-          {error && <p>{error.message}</p>}
+          {error && <p className="text-danger mt-3">{error.message}</p>}
         </form>
       </Container>
     );
