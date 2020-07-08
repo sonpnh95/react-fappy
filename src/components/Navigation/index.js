@@ -135,7 +135,7 @@ const NavigationAuth = ({ authUser }) => {
             <ListItemIcon><MailIcon /></ListItemIcon>
             <ListItemText primary={"Home"} />
           </ListItem>
-          <ListItem button component={Link} to={ROUTES.ADMIN}>
+          <ListItem button component={Link} to={ROUTES.LIST_ACCOUNTS}>
             <ListItemIcon><PeopleAltIcon /></ListItemIcon>
             <ListItemText primary={"List Account"} />
           </ListItem>

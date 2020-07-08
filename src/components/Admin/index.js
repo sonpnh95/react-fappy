@@ -9,8 +9,9 @@ import * as ROUTES from '../../constants/routes';
 
 const AdminPage = () => (
     <Switch>
-      <Route exact path={ROUTES.ADMIN_DETAILS} component={UserItem} />
-      <Route exact path={ROUTES.ADMIN} component={UserList} />
+      <Route exact path={ROUTES.ACCOUNT_DETAILS} component={UserItem} />
+      <Route exact path={ROUTES.ADD_ACCOUNT} component={UserItem} />
+      <Route exact path={ROUTES.LIST_ACCOUNTS} component={UserList} />
     </Switch>
 );
 

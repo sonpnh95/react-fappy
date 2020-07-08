@@ -30,3 +30,17 @@
 .margin-wauto {
   margin: 0 auto !important;
 }
+
+.form-margin {
+  margin: 4rem auto !important;
+}
+.overflow-unset {
+  overflow: unset !important;
+}
+.form-title-box {
+  position: absolute;
+  background: #28a745;
+  color: #fff;
+  top: 0;
+  transform: translateY(-50%);
+}

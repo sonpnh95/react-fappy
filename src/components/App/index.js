@@ -51,7 +51,7 @@ class App extends React.Component {
             />
             <Route path={ROUTES.HOME} component={HomePage} />
             <Route path={ROUTES.ACCOUNT} component={AccountPage} />
-            <Route path={ROUTES.ADMIN} component={AdminPage} />
+            <Route path={ROUTES.LIST_ACCOUNTS} component={AdminPage} />
             <Route path={ROUTES.SIGN_OUT} component={SignOut} />
           </Switch>
         </div>
